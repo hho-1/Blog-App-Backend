@@ -27,7 +27,7 @@ const ContributionSchema = new mongoose.Schema({
     category_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
-        default: 0
+        required: true
     },
     publish_date: {
         type: Date,
@@ -36,7 +36,6 @@ const ContributionSchema = new mongoose.Schema({
     author: { 
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
     },
     status: {
         type: String,

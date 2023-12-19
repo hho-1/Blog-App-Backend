@@ -23,7 +23,7 @@ router.use('/categories', require('./category'))
 // contribution:
 router.use('/blogs', require('./contribution'))
 // comment:
-router.use('/comments', require('./product'))
+router.use('/comments', require('./comment'))
 
 
 

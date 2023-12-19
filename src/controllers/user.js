@@ -23,9 +23,9 @@ module.exports = {
             `
         */
 
-        const filters = (req.user?.is_admin) ? {} : { _id: req.user._id }
+        //const filters = (req.user?.is_admin) ? {} : { _id: req.user._id }
 
-        const data = await res.getModelList(User, filters)
+        const data = await res.getModelList(User, /* filters */)
 
         // res.status(200).send({
         //     error: false,

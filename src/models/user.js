@@ -76,7 +76,7 @@ const UserSchema = new mongoose.Schema({
     password2: {
         type: String,
         trim: true,
-        required: true
+        required: true,
     },
     is_active: {
         type: Boolean,
@@ -84,7 +84,7 @@ const UserSchema = new mongoose.Schema({
     },
     is_login: {
         type: Boolean,
-        default: false
+        default: true
     },
     is_admin: {
         type: Boolean,
@@ -113,17 +113,23 @@ UserSchema.pre(['save', 'updateOne'], function (next) {
 
         if (data?.password) {
 
-            // pass == (min 1: lowerCase, upperCase, Numeric, @$!%*?& + min 8 chars)
-            const isPasswordValidated = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(data.password)
+            if(data?.password === data?.password2){
 
-            if (isPasswordValidated) {
+                // pass == (min 1: lowerCase, upperCase, Numeric, @$!%*?& + min 8 chars)
+                const isPasswordValidated = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+]).{8,}$/.test(data.password)
 
-                this.password = data.password = passwordEncrypt(data.password)
-                this._update = data // updateOne will wait data from "this._update".
+                if (isPasswordValidated) {
 
-            } else {
+                    this.password = data.password = passwordEncrypt(data.password)
+                    this._update = data // updateOne will wait data from "this._update".
 
-                next(new Error('Password not validated.'))
+                } else {
+
+                    next(new Error('Password not validated.'))
+                }
+            }
+            else{
+                next(new Error('2 passwords must be same.'))
             }
         }
 

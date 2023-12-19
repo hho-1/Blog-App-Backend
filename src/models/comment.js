@@ -17,8 +17,7 @@ const CommentSchema = new mongoose.Schema({
     content: {
         type: String,
         trim: true,
-        required: true,
-        unique: true
+        required: true
     },
     nickname: {
         type: String,
@@ -28,8 +27,7 @@ const CommentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['p', 'd'],
-        required: true
+        enum: ['p', 'd']
     },
     publish_date: {
         type: Date,

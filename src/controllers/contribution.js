@@ -20,7 +20,7 @@ module.exports = {
             `
         */
 
-        const data = await res.getModelList(Contribution)
+        const data = await res.getModelList(Contribution, {}, 'comments')
 
         // res.status(200).send({
         //     error: false,
@@ -57,7 +57,9 @@ module.exports = {
             #swagger.summary = "Get Single Contribution"
         */
 
-        const data = await Contribution.findOne({ _id: req.params.id })
+        const data = await Contribution.findOne({ _id: req.params.id }).populate("comments").then(contribution => {res.json(contribution)})
+        console.log(data.comments);
+
 
         res.status(200).send({
             error: false,
