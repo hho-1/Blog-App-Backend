@@ -62,13 +62,10 @@ app.use(express.json())
     app.all('*', cors({ origin: 'allmethods.com' }))
 */
 
- app.use(require('cors')()) // Run with defaults.
+ //app.use(require('cors')()) // Run with defaults.
 /* app.use(require('cors')({
     origin: ["http://localhost:3000", "http://localhost:4173", "http://localhost:5173"]
 })) */
-
-// Call static uploadFile:
-app.use('/upload', express.static('./upload'))
 
 // Check Authentication:
 app.use(require('./src/middlewares/authentication'))
@@ -86,7 +83,7 @@ app.use(require('./src/middlewares/findSearchSortPage'))
 app.all('/', (req, res) => {
     res.send({
         error: false,
-        message: 'Welcome to Stock Management API',
+        message: 'Welcome to Blog API',
         documents: {
             swagger: '/documents/swagger',
             redoc: '/documents/redoc',
@@ -109,5 +106,5 @@ app.use(require('./src/middlewares/errorHandler'))
 app.listen(PORT, () => console.log(`http://${HOST}:${PORT}`))
 
 /* ------------------------------------------------------- */
-// Syncronization (must be in commentLine):
+// Syncronization 
 //require('./src/helpers/sync')() // !!! It clear database.

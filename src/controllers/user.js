@@ -54,7 +54,7 @@ module.exports = {
             }
         */
 
-        // Disallow setting admin/staff:
+        // Disallow setting himself admin/staff:
         req.body.is_staff = false
         req.body.is_admin = false
 

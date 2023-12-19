@@ -4,22 +4,22 @@
 ------------------------------------------------------- */
 const router = require('express').Router()
 /* ------------------------------------------------------- */
-// routes/sale:
+// routes/comment:
 
 const permissions = require('../middlewares/permissions')
-const sale = require('../controllers/sale')
+const comment = require('../controllers/comment')
 
-// URL: /sales
+// URL: /comments
 
 router.route('/')
-    .get(permissions.isStaff, sale.list)
-    .post(permissions.isStaff, sale.create)
+    .get(comment.list)
+    .post(comment.create)
 
 router.route('/:id')
-    .get(permissions.isStaff, sale.read)
-    .put(permissions.isStaff, sale.update)
-    .patch(permissions.isStaff, sale.update)
-    .delete(permissions.isStaff, sale.delete)
+    .get(comment.read)
+    .put(permissions.isLogin, comment.update)
+    .patch(permissions.isLogin, comment.update)
+    .delete(permissions.isLogin, comment.delete)
 
 /* ------------------------------------------------------- */
 module.exports = router
