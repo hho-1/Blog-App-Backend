@@ -5,6 +5,7 @@
 
 const User = require('../models/user')
 const Token = require('../models/token')
+const Contribution = require('../models/contribution')
 const passwordEncrypt = require('../helpers/passwordEncrypt')
 
 module.exports = {
@@ -61,7 +62,7 @@ module.exports = {
         const data = await User.create(req.body)
 
         // Create token for auto-login:
-        const tokenData = await Token.create({
+        const tokenData = await Token.findOne({
             user_id: data._id,
             token: passwordEncrypt(data._id + Date.now())
         })

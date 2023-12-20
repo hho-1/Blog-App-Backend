@@ -3,6 +3,7 @@
 // Comment Controller:
 
 const Comment = require('../models/comment')
+const Contribution = require('../models/contribution')
 
 module.exports = {
 
@@ -44,6 +45,10 @@ module.exports = {
         */
 
         const data = await Comment.create(req.body)
+        // const blog = await Contribution.findOne({_id: data.contribution_id})
+        // blog.comments.push(data.id)
+        // blog.save();
+        await Contribution.updateOne({_id: data.contribution_id}, {$push: {comments: data.id}})
 
         res.status(201).send({
             error: false,
@@ -91,7 +96,13 @@ module.exports = {
             #swagger.summary = "Delete Comment"
         */
 
+        const comment = await Comment.findOne({ _id: req.params.id })
+        //console.log(comment.contribution_id);
+        await Contribution.updateOne({id: comment.contribution_id}, {$pull: {comments: comment.id}})
+        
         const data = await Comment.deleteOne({ _id: req.params.id })
+
+        
 
         res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,

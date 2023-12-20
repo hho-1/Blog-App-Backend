@@ -78,6 +78,10 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         required: true,
     },
+    contributions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Contribution'
+    }],
     is_active: {
         type: Boolean,
         default: true

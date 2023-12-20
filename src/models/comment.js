@@ -7,6 +7,8 @@ const { mongoose } = require('../configs/dbConnection')
 /* ------------------------------------------------------- */
 // Comment Model:
 
+const enums = {"Published":'p', "Keep as Draft": 'd'}
+
 const CommentSchema = new mongoose.Schema({
 
     contribution_id: {
@@ -27,7 +29,8 @@ const CommentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['p', 'd']
+        enum: [enums.Published, enums['Keep as Draft']],
+        default: 'p'
     },
     publish_date: {
         type: Date,

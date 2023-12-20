@@ -3,6 +3,8 @@
 // Contribution Controller:
 
 const Contribution = require('../models/contribution')
+const User = require('../models/user')
+
 
 module.exports = {
 
@@ -21,6 +23,7 @@ module.exports = {
         */
 
         const data = await res.getModelList(Contribution, {}, 'comments')
+
 
         // res.status(200).send({
         //     error: false,
@@ -45,6 +48,8 @@ module.exports = {
 
         const data = await Contribution.create(req.body)
 
+        await User.updateOne({_id: data.user_id}, {$push: {contributions: data.id}})
+
         res.status(201).send({
             error: false,
             data
@@ -57,8 +62,8 @@ module.exports = {
             #swagger.summary = "Get Single Contribution"
         */
 
-        const data = await Contribution.findOne({ _id: req.params.id }).populate("comments").then(contribution => {res.json(contribution)})
-        console.log(data.comments);
+        const data = await Contribution.findOne({ _id: req.params.id }).populate("comments")
+        //console.log(data);
 
 
         res.status(200).send({
@@ -92,6 +97,10 @@ module.exports = {
             #swagger.tags = ["Contributions"]
             #swagger.summary = "Delete Contribution"
         */
+
+        const contribution = await Contribution.findOne({ _id: req.params.id })
+
+        await User.updateOne({id: contribution.user_id}, {$pull: {contributions: contribution.id}})
 
         const data = await Contribution.deleteOne({ _id: req.params.id })
 
