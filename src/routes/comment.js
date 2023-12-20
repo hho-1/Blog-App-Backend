@@ -12,7 +12,7 @@ const comment = require('../controllers/comment')
 
 router.route('/')
     .get(comment.list)
-    .post(comment.create)
+    .post(permissions.isLogin, comment.create)
 
 router.route('/:id')
     .get(comment.read)

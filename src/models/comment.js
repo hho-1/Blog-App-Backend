@@ -24,8 +24,7 @@ const CommentSchema = new mongoose.Schema({
     nickname: {
         type: String,
         trim: true,
-        required: true,
-        unique: true
+        required: true
     },
     status: {
         type: String,
@@ -37,6 +36,10 @@ const CommentSchema = new mongoose.Schema({
         default: Date.now
     },
     likes_num: {
+        type: Number,
+        default: 0
+    },
+    dislikes_num: {
         type: Number,
         default: 0
     }
