@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Stock Management API",
-    "description": "Stock Management System",
+    "title": "Blog API",
+    "description": "Blog Application",
     "termsOfService": "http://www.clarusway.com/#",
     "contact": {
       "name": "Clarusway",
