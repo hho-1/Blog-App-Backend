@@ -10,8 +10,8 @@ module.exports = {
 
     list: async (req, res) => {
         /*
-            #swagger.tags = ["Comments"]
-            #swagger.summary = "List Comments"
+            #swagger.tags = ["CommentLikes"]
+            #swagger.summary = "List CommentLikes"
             #swagger.description = `
                 You can send query with endpoint for search[], sort[], page and limit.
                 <ul> Examples:
@@ -26,7 +26,7 @@ module.exports = {
 
         // res.status(200).send({
         //     error: false,
-        //     details: await res.getModelListDetails(Comment),
+        //     details: await res.getModelListDetails(CommentLike),
         //     data
         // })
         
@@ -36,8 +36,8 @@ module.exports = {
 
     create: async (req, res) => {
         /*
-            #swagger.tags = ["Comments"]
-            #swagger.summary = "Create Comment"
+            #swagger.tags = ["CommentLikes"]
+            #swagger.summary = "Create CommentLikes"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
@@ -58,8 +58,8 @@ module.exports = {
 
     delete: async (req, res) => {
         /*
-            #swagger.tags = ["Comments"]
-            #swagger.summary = "Delete Comment"
+            #swagger.tags = ["CommentLikes"]
+            #swagger.summary = "Delete CommentLike"
         */
 
         const commentLike = await CommentLikes.findOne({ _id: req.params.id })
