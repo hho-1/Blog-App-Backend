@@ -48,7 +48,7 @@ module.exports = {
         const data = await CommentLikes.create(req.body)
         
 
-        await Comment.updateOne({_id: data.comment_id}, {$inc: {likesNum: +data.quantity}})
+        await Comment.updateOne({_id: data.comment_id}, {$inc: {likes_num: +data.quantity}})
 
         res.status(201).send({
             error: false,
@@ -62,9 +62,9 @@ module.exports = {
             #swagger.summary = "Delete Comment"
         */
 
-        const commentLikes = await CommentLikes.findOne({ _id: req.params.id })
+        const commentLike = await CommentLikes.findOne({ _id: req.params.id })
 
-        await Comment.updateOne({id: commentLikes.comment_id}, {$inc: {likesNum: -data.quantity}})
+        await Comment.updateOne({_id: commentLike.comment_id}, {$inc: {likes_num: -1}})
         
         const data = await CommentLikes.deleteOne({ _id: req.params.id })
 

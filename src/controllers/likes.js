@@ -62,9 +62,9 @@ module.exports = {
             #swagger.summary = "Delete Comment"
         */
 
-        const likes = await Likes.findOne({ _id: req.params.id })
+        const like = await Likes.findOne({ _id: req.params.id })
 
-        await Contribution.updateOne({id: likes.contribution_id}, {$inc: {likes: -data.quantity}})
+        await Contribution.updateOne({_id: like.contribution_id}, {$inc: {likes: -1}})
         
         const data = await Likes.deleteOne({ _id: req.params.id })
 

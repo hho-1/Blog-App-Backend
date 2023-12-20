@@ -3,6 +3,7 @@
 // Contribution Controller:
 
 const Contribution = require('../models/contribution')
+const Comment = require('../models/comment')
 const User = require('../models/user')
 
 
@@ -101,6 +102,8 @@ module.exports = {
         const contribution = await Contribution.findOne({ _id: req.params.id })
 
         await User.updateOne({id: contribution.user_id}, {$pull: {contributions: contribution.id}})
+
+        await Comment.deleteMany({contribution_id: contribution.id})
 
         const data = await Contribution.deleteOne({ _id: req.params.id })
 
