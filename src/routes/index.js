@@ -30,6 +30,8 @@ router.use('/likes', require('./likes'))
 router.use('/commentlikes', require('./commentLikes'))
 // commentlikes:
 router.use('/commentdislikes', require('./commentDislikes'))
+// commentlikes:
+router.use('/status', require('./status'))
 //documnets
 router.use('/documents', require('./document'))
 

@@ -54,8 +54,8 @@ const ContributionSchema = new mongoose.Schema({
         trim: true
     },
     category_name: {
-        type: String,
-        trim: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
     },
     likes: {
         type: Number,

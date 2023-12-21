@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Blog API",
-    "description": "Blog Application",
+    "title": "Stock Management API",
+    "description": "Stock Management System",
     "termsOfService": "http://www.clarusway.com/#",
     "contact": {
       "name": "Clarusway",
@@ -823,9 +823,9 @@
     "/commentlikes/": {
       "get": {
         "tags": [
-          "Comments"
+          "CommentLikes"
         ],
-        "summary": "List Comments",
+        "summary": "List CommentLikes",
         "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
           "200": {
@@ -835,9 +835,9 @@
       },
       "post": {
         "tags": [
-          "Comments"
+          "CommentLikes"
         ],
-        "summary": "Create Comment",
+        "summary": "Create CommentLikes",
         "description": "",
         "parameters": [
           {
@@ -859,9 +859,9 @@
     "/commentlikes/{id}": {
       "delete": {
         "tags": [
-          "Comments"
+          "CommentLikes"
         ],
-        "summary": "Delete Comment",
+        "summary": "Delete CommentLike",
         "description": "",
         "parameters": [
           {
@@ -884,9 +884,9 @@
     "/commentdislikes/": {
       "get": {
         "tags": [
-          "Comments"
+          "CommentDislikes"
         ],
-        "summary": "List Comments",
+        "summary": "List CommentDislikes",
         "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
           "200": {
@@ -896,9 +896,9 @@
       },
       "post": {
         "tags": [
-          "Comments"
+          "CommentDislikes"
         ],
-        "summary": "Create Comment",
+        "summary": "Create CommentDislikes",
         "description": "",
         "parameters": [
           {
@@ -920,9 +920,9 @@
     "/commentdislikes/{id}": {
       "delete": {
         "tags": [
-          "Comments"
+          "CommentDislikes"
         ],
-        "summary": "Delete Comment",
+        "summary": "Delete CommentDislikes",
         "description": "",
         "parameters": [
           {
@@ -938,6 +938,143 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/status/": {
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "summary": "List Status",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Status"
+        ],
+        "summary": "Create Status",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/status/{id}": {
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "summary": "Get Single Status",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Status"
+        ],
+        "summary": "Update Status",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Status"
+        ],
+        "summary": "Delete Status",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Status"
+        ],
+        "summary": "Update Status",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Status"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
           }
         }
       }
