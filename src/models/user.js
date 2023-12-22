@@ -49,6 +49,10 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         required: true,
     },
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Likes'
+    }],
     contributions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Contribution'

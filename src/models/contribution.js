@@ -40,9 +40,9 @@ const ContributionSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    status: {
-        type: String,
-        enum: [enums.Published, enums['Keep as Draft']],
+    status_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Status',
         required: true
     },
     comments: [{
@@ -57,15 +57,19 @@ const ContributionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     },
-    likes: {
-        type: Number,
-        default: 0
-    },
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Likes'
+    }],
     post_views: {
         type: Number,
         default: 0
     },
     comment_count: {
+        type: Number,
+        default: 0
+    },
+    likes_count: {
         type: Number,
         default: 0
     },

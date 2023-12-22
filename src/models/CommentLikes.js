@@ -15,12 +15,12 @@ const CommentsLikesSchema = new mongoose.Schema({
         ref: 'Comment',
         required: true
     },
-    quantity: {
-        type: Number,
-        default: 0
+    isClickked: {
+        type: Boolean,
+        default: false
     }
 
-}, { collection: 'likes', timestamps: true })
+}, { collection: 'commentLikes', timestamps: true })
 
 /* ------------------------------------------------------- */
 

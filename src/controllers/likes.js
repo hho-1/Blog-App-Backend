@@ -48,7 +48,7 @@ module.exports = {
         const data = await Likes.create(req.body)
         
 
-        await Contribution.updateOne({_id: data.contribution_id}, {$inc: {likes: +data.quantity}})
+        await Contribution.updateOne({_id: data.contribution_id}, {$inc: {likes_count: +1}})
 
         res.status(201).send({
             error: false,
@@ -64,7 +64,7 @@ module.exports = {
 
         const like = await Likes.findOne({ _id: req.params.id })
 
-        await Contribution.updateOne({_id: like.contribution_id}, {$inc: {likes: -1}})
+        await Contribution.updateOne({_id: like.contribution_id}, {$inc: {likes_count: -1}})
         
         const data = await Likes.deleteOne({ _id: req.params.id })
 

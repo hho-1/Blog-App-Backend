@@ -14,8 +14,17 @@ const LikesSchema = new mongoose.Schema({
         ref: 'Contribution',
         required: true
     },
-    quantity: {
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    differ:{
+        type: String,
+        trim: true
+    },
+    quantity:{
         type: Number,
+        required: true,
         default: 0
     }
 
