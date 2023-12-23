@@ -21,11 +21,6 @@ const LikesSchema = new mongoose.Schema({
     differ:{
         type: String,
         trim: true
-    },
-    quantity:{
-        type: Number,
-        required: true,
-        default: 0
     }
 
 }, { collection: 'likes', timestamps: true })

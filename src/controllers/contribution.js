@@ -5,6 +5,7 @@
 const Contribution = require('../models/contribution')
 const Comment = require('../models/comment')
 const User = require('../models/user')
+const likes = require('./likes')
 
 
 module.exports = {
@@ -23,7 +24,11 @@ module.exports = {
             `
         */
 
-        const data = await res.getModelList(Contribution, {}, 'comments')
+        req.body.like_count >= 0
+        req.body.comment_count >= 0
+        req.body.post_views >= 0
+
+        const data = await res.getModelList(Contribution, {}, 'comments', 'likes')
 
 
         // res.status(200).send({

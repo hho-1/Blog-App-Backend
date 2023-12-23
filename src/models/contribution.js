@@ -63,7 +63,7 @@ const ContributionSchema = new mongoose.Schema({
     }],
     post_views: {
         type: Number,
-        default: 0
+        default: 0,
     },
     comment_count: {
         type: Number,
@@ -71,7 +71,7 @@ const ContributionSchema = new mongoose.Schema({
     },
     likes_count: {
         type: Number,
-        default: 0
+        default: 0,
     },
 
 
