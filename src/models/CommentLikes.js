@@ -15,9 +15,13 @@ const CommentsLikesSchema = new mongoose.Schema({
         ref: 'Comment',
         required: true
     },
-    isClickked: {
-        type: Boolean,
-        default: false
+    username: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    differ:{
+        type: String,
+        trim: true
     }
 
 }, { collection: 'commentLikes', timestamps: true })

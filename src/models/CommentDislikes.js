@@ -15,9 +15,13 @@ const CommentsDislikesSchema = new mongoose.Schema({
         ref: 'Comment',
         required: true
     },
-    quantity: {
-        type: Number,
-        default: 0
+    username: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    differ:{
+        type: String,
+        trim: true
     }
 
 }, { collection: 'dislikes', timestamps: true })

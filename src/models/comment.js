@@ -33,10 +33,18 @@ const CommentSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    comment_likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CommentLikes',
+    }],
     likes_num: {
         type: Number,
         default: 0
     },
+    comment_dislikes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CommentDisikes',
+    }],
     dislikes_num: {
         type: Number,
         default: 0

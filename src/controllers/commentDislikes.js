@@ -48,7 +48,8 @@ module.exports = {
         const data = await CommentDislikes.create(req.body)
         
 
-        await Comment.updateOne({_id: data.comment_id}, {$inc: {dislikes_num: +data.quantity}})
+        await Comment.updateOne({_id: data.comment_id}, {$push: {comment_dislikes: data.id}})
+        await Comment.updateOne({_id: data.comment_id}, {$inc: {dislikes_num: +1}})
 
         res.status(201).send({
             error: false,
@@ -62,9 +63,10 @@ module.exports = {
             #swagger.summary = "Delete CommentDislikes"
         */
 
-        const commentLike = await CommentDislikes.findOne({ _id: req.params.id })
+        const commentDislike = await CommentDislikes.findOne({ _id: req.params.id })
 
-        await Comment.updateOne({_id: commentLike.comment_id}, {$inc: {dislikes_num: -1}})
+        await Comment.updateOne({_id: commentDislike.comment_id}, {$inc: {dislikes_num: -1}})
+        await Comment.updateOne({_id: commentDislike.comment_id}, {$pull: {comment_dislikes: commentDislike.id}})
         
         const data = await CommentDislikes.deleteOne({ _id: req.params.id })
 

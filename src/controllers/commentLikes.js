@@ -47,8 +47,9 @@ module.exports = {
 
         const data = await CommentLikes.create(req.body)
         
-
-        await Comment.updateOne({_id: data.comment_id}, {$inc: {likes_num: +data.quantity}})
+        await Comment.updateOne({_id: data.comment_id}, {$push: {comment_likes: data.id}})
+        await Comment.updateOne({_id: data.comment_id}, {$inc: {likes_num: +1}})
+        
 
         res.status(201).send({
             error: false,
@@ -64,6 +65,7 @@ module.exports = {
 
         const commentLike = await CommentLikes.findOne({ _id: req.params.id })
 
+        await Comment.updateOne({_id: commentLike.comment_id}, {$pull: {comment_likes: commentLike.id}})
         await Comment.updateOne({_id: commentLike.comment_id}, {$inc: {likes_num: -1}})
         
         const data = await CommentLikes.deleteOne({ _id: req.params.id })
