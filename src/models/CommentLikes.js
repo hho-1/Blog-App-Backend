@@ -15,7 +15,7 @@ const CommentsLikesSchema = new mongoose.Schema({
         ref: 'Comment',
         required: true
     },
-    username: {
+    user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
