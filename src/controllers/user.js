@@ -56,7 +56,7 @@ module.exports = {
         */
 
         // Disallow setting himself admin/staff:
-        req.body.is_staff = false
+    
         req.body.is_admin = false
 
         const data = await User.create(req.body)

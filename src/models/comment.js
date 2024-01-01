@@ -24,14 +24,13 @@ const CommentSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
     username: {
         type: String,
-        trim: true,
-        required: true
-    },
-    publish_date: {
-        type: Date,
-        default: Date.now
+        trim: true
     },
     comment_likes: [{
         type: mongoose.Schema.Types.ObjectId,
