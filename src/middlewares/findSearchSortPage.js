@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     // PAGINATION: URL?page=1&limit=10
     // LIMIT:
     let limit = Number(req.query?.limit)
-    limit = limit > 0 ? limit : Number(process.env?.PAGE_SIZE || 20)
+    limit = limit > 0 ? limit : Number(process.env?.PAGE_SIZE || 12)
     // PAGE:
     let page = Number(req.query?.page)
     page = (page > 0 ? page : 1) - 1

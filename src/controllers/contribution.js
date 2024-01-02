@@ -5,6 +5,7 @@
 const Contribution = require('../models/contribution')
 const Comment = require('../models/comment')
 const User = require('../models/user')
+const Category = require('../models/category')
 const likes = require('./likes')
 
 
@@ -36,6 +37,13 @@ module.exports = {
         //     details: await res.getModelListDetails(Contribution),
         //     data
         // })
+
+        const categories = await Category.find()
+        // console.log(categories)
+        const recentPosts = await BlogPost.find().sort({ createdAt: 'desc' }).limit(3)
+
+        // Add '?' parameters to url if there is not:
+        if (!req.originalUrl.includes('?')) req.originalUrl += '?'
         
         // FOR REACT PROJECT:
         res.status(200).send(data)
