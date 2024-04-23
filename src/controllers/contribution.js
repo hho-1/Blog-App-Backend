@@ -40,7 +40,7 @@ module.exports = {
 
         const categories = await Category.find()
         // console.log(categories)
-        const recentPosts = await BlogPost.find().sort({ createdAt: 'desc' }).limit(3)
+        const recentPosts = await Contribution.find().sort({ createdAt: 'desc' }).limit(3)
 
         // Add '?' parameters to url if there is not:
         if (!req.originalUrl.includes('?')) req.originalUrl += '?'
