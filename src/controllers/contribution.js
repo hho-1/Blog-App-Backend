@@ -1,18 +1,16 @@
-"use strict"
+"use strict";
 
 // Contribution Controller:
 
-const Contribution = require('../models/contribution')
-const Comment = require('../models/comment')
-const User = require('../models/user')
-const Category = require('../models/category')
-const likes = require('./likes')
-
+const Contribution = require("../models/contribution");
+const Comment = require("../models/comment");
+const User = require("../models/user");
+const Category = require("../models/category");
+const likes = require("./likes");
 
 module.exports = {
-
-    list: async (req, res) => {
-        /*
+  list: async (req, res) => {
+    /*
             #swagger.tags = ["Contributions"]
             #swagger.summary = "List Contributions"
             #swagger.description = `
@@ -25,32 +23,35 @@ module.exports = {
             `
         */
 
-        req.body.like_count >= 0
-        req.body.comment_count >= 0
-        req.body.post_views >= 0
+    try {
+      const data = await res.getModelList(
+        Contribution,
+        {},
+        "comments",
+        "likes"
+      );
 
-        const data = await res.getModelList(Contribution, {}, 'comments', 'likes')
+      req.body.like_count >= 0;
+      req.body.comment_count >= 0;
+      req.body.post_views >= 0;
 
+      const categories = await Category.find();
+      // console.log(categories)
+      const recentPosts = await Contribution.find()
+        .sort({ createdAt: "desc" })
+        .limit(3);
 
-        // res.status(200).send({
-        //     error: false,
-        //     details: await res.getModelListDetails(Contribution),
-        //     data
-        // })
+      // Add '?' parameters to url if there is not:
+      if (!req.originalUrl.includes("?")) req.originalUrl += "?";
 
-        const categories = await Category.find()
-        // console.log(categories)
-        const recentPosts = await Contribution.find().sort({ createdAt: 'desc' }).limit(3)
+      res.status(200).send(data);
+    } catch (err) {
+      res.status(500).send({ error: true, message: err.message });
+    }
+  },
 
-        // Add '?' parameters to url if there is not:
-        if (!req.originalUrl.includes('?')) req.originalUrl += '?'
-        
-        // FOR REACT PROJECT:
-        res.status(200).send(data)
-    },
-
-    create: async (req, res) => {
-        /*
+  create: async (req, res) => {
+    /*
             #swagger.tags = ["Contributions"]
             #swagger.summary = "Create Contribution"
             #swagger.parameters['body'] = {
@@ -60,34 +61,35 @@ module.exports = {
             }
         */
 
-        const data = await Contribution.create(req.body)
+    try {
+      const data = await Contribution.create(req.body);
+      await User.findByIdAndUpdate(data.user_id, {
+        $push: { contributions: data.id },
+      });
+      res.status(201).send({ error: false, data });
+    } catch (err) {
+      res.status(400).send({ error: true, message: err.message });
+    }
+  },
 
-        await User.updateOne({_id: data.user_id}, {$push: {contributions: data.id}})
-
-        res.status(201).send({
-            error: false,
-            data
-        })
-    },
-
-    read: async (req, res) => {
-        /*
+  read: async (req, res) => {
+    /*
             #swagger.tags = ["Contributions"]
             #swagger.summary = "Get Single Contribution"
         */
 
-        const data = await Contribution.findOne({ _id: req.params.id }).populate("comments")
-        //console.log(data);
+    try {
+      const data = await Contribution.findById(req.params.id).populate(
+        "comments"
+      );
+      res.status(200).send({ error: false, data });
+    } catch (err) {
+      res.status(404).send({ error: true, message: err.message });
+    }
+  },
 
-
-        res.status(200).send({
-            error: false,
-            data
-        })
-    },
-
-    update: async (req, res) => {
-        /*
+  update: async (req, res) => {
+    /*
             #swagger.tags = ["Contributions"]
             #swagger.summary = "Update Contribution"
             #swagger.parameters['body'] = {
@@ -97,32 +99,47 @@ module.exports = {
             }
         */
 
-        const data = await Contribution.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
+    try {
+      const data = await Contribution.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true, runValidators: true }
+      );
+      res.status(202).send({
+        error: false,
+        data,
+        new: await Contribution.findById(req.params.id),
+      });
+    } catch (err) {
+      res.status(400).send({ error: true, message: err.message });
+    }
+  },
 
-        res.status(202).send({
-            error: false,
-            data,
-            new: await Contribution.findOne({ _id: req.params.id })
-        })
-    },
-
-    delete: async (req, res) => {
-        /*
+  delete: async (req, res) => {
+    /*
             #swagger.tags = ["Contributions"]
             #swagger.summary = "Delete Contribution"
         */
 
-        const contribution = await Contribution.findOne({ _id: req.params.id })
+    try {
+      const contribution = await Contribution.findOne({
+        _id: req.params.id,
+      });
+      if (!contribution)
+        return res
+          .status(404)
+          .send({ error: true, message: "Contribution not found" });
 
-        await User.updateOne({id: contribution.user_id}, {$pull: {contributions: contribution.id}})
+      await User.findByIdAndUpdate(contribution.user_id, {
+        $pull: { contributions: contribution.id },
+      });
+      await Comment.deleteMany({ contribution_id: contribution.id });
 
-        await Comment.deleteMany({contribution_id: contribution.id})
+      const data = await Contribution.deleteOne({ _id: req.params.id });
 
-        const data = await Contribution.deleteOne({ _id: req.params.id })
-
-        res.status(data.deletedCount ? 204 : 404).send({
-            error: !data.deletedCount,
-            data
-        })
-    },
-}
+      res.status(204).send({ error: false, data: contribution });
+    } catch (err) {
+      res.status(500).send({ error: true, message: err.message });
+    }
+  },
+};

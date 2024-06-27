@@ -1,14 +1,13 @@
-"use strict"
+"use strict";
 
 // Comment Controller:
 
-const Comment = require('../models/comment')
-const Contribution = require('../models/contribution')
+const Comment = require("../models/comment");
+const Contribution = require("../models/contribution");
 
 module.exports = {
-
-    list: async (req, res) => {
-        /*
+  list: async (req, res) => {
+    /*
             #swagger.tags = ["Comments"]
             #swagger.summary = "List Comments"
             #swagger.description = `
@@ -21,20 +20,16 @@ module.exports = {
             `
         */
 
-        const data = await res.getModelList(Comment)
+    try {
+      const data = await res.getModelList(Comment);
+      res.status(200).send(data);
+    } catch (err) {
+      res.status(500).send({ error: true, message: err.message });
+    }
+  },
 
-        // res.status(200).send({
-        //     error: false,
-        //     details: await res.getModelListDetails(Comment),
-        //     data
-        // })
-        
-        // FOR REACT PROJECT:
-        res.status(200).send(data)
-    },
-
-    create: async (req, res) => {
-        /*
+  create: async (req, res) => {
+    /*
             #swagger.tags = ["Comments"]
             #swagger.summary = "Create Comment"
             #swagger.parameters['body'] = {
@@ -44,36 +39,34 @@ module.exports = {
             }
         */
 
-        const data = await Comment.create(req.body)
-        // const blog = await Contribution.findOne({_id: data.contribution_id})
-        // blog.comments.push(data.id)
-        // blog.save();
-        await Contribution.updateOne({_id: data.contribution_id}, {$push: {comments: data.id}})
-        await Contribution.updateOne({_id: data.contribution_id}, {$inc: {comment_count: +1}})
+    try {
+      const data = await Comment.create(req.body);
+      await Contribution.findByIdAndUpdate(data.contribution_id, {
+        $push: { comments: data.id },
+        $inc: { comment_count: 1 },
+      });
+      res.status(201).send({ error: false, data });
+    } catch (err) {
+      res.status(400).send({ error: true, message: err.message });
+    }
+  },
 
-        res.status(201).send({
-            error: false,
-            data
-        })
-
-    },
-
-    read: async (req, res) => {
-        /*
+  read: async (req, res) => {
+    /*
             #swagger.tags = ["Comments"]
             #swagger.summary = "Get Single Comment"
         */
 
-        const data = await Comment.findOne({ _id: req.params.id })
+    try {
+      const data = await Comment.findById(req.params.id);
+      res.status(200).send({ error: false, data });
+    } catch (err) {
+      res.status(404).send({ error: true, message: err.message });
+    }
+  },
 
-        res.status(200).send({
-            error: false,
-            data
-        })
-    },
-
-    update: async (req, res) => {
-        /*
+  update: async (req, res) => {
+    /*
             #swagger.tags = ["Comments"]
             #swagger.summary = "Update Comment"
             #swagger.parameters['body'] = {
@@ -83,33 +76,48 @@ module.exports = {
             }
         */
 
-        const data = await Comment.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
+    try {
+      const data = await Comment.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      res.status(202).send({ error: false, data });
+    } catch (err) {
+      res.status(400).send({ error: true, message: err.message });
+    }
 
-        res.status(202).send({
-            error: false,
-            data,
-            new: await Comment.findOne({ _id: req.params.id })
-        })
-    },
+    // const data = await Comment.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
-    delete: async (req, res) => {
-        /*
+    // res.status(202).send({
+    //     error: false,
+    //     data,
+    //     new: await Comment.findOne({ _id: req.params.id })
+    // })
+  },
+
+  delete: async (req, res) => {
+    /*
             #swagger.tags = ["Comments"]
             #swagger.summary = "Delete Comment"
         */
 
-        const comment = await Comment.findOne({ _id: req.params.id })
-        //console.log(comment.contribution_id);
-        await Contribution.updateOne({id: comment.contribution_id}, {$pull: {comments: comment.id}})
-        await Contribution.updateOne({_id: comment.contribution_id}, {$inc: {comment_count: -1}})
-        
-        const data = await Comment.deleteOne({ _id: req.params.id })
+    try {
+      const comment = await Comment.findOne({ _id: req.params.id });
+      if (!comment)
+        return res
+          .status(404)
+          .send({ error: true, message: "Comment not found" });
 
-        
+      await Contribution.findByIdAndUpdate(comment.contribution_id, {
+        $pull: { comments: comment.id },
+        $inc: { comment_count: -1 },
+      });
 
-        res.status(data.deletedCount ? 204 : 404).send({
-            error: !data.deletedCount,
-            data
-        })
-    },
-}
+      const data = await Comment.deleteOne({ _id: req.params.id });
+
+      res.status(204).send({ error: false, data: comment });
+    } catch (err) {
+      res.status(500).send({ error: true, message: err.message });
+    }
+  },
+};
