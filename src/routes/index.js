@@ -25,7 +25,7 @@ router.use('/blogs', require('./contribution'))
 // comment:
 router.use('/comments', require('./comment'))
 // likes:
-router.use('/likes', require('./likes'))
+router.use('/likes', require('./like'))
 // commentlikes:
 router.use('/commentlikes', require('./commentLikes'))
 // commentlikes:

@@ -59,7 +59,7 @@ const ContributionSchema = new mongoose.Schema({
     },
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Likes'
+        ref: 'Like'
     }],
     post_views: {
         type: Number,

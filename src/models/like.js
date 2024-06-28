@@ -7,7 +7,7 @@ const { mongoose } = require('../configs/dbConnection')
 /* ------------------------------------------------------- */
 // Likes Model:
 
-const LikesSchema = new mongoose.Schema({
+const LikeSchema = new mongoose.Schema({
 
     contribution_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -26,4 +26,4 @@ const LikesSchema = new mongoose.Schema({
 }, { collection: 'likes', timestamps: true })
 
 
-module.exports = mongoose.model('Likes', LikesSchema)
+module.exports = mongoose.model('Like', LikeSchema)

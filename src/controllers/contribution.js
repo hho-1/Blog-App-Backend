@@ -6,7 +6,7 @@ const Contribution = require("../models/contribution");
 const Comment = require("../models/comment");
 const User = require("../models/user");
 const Category = require("../models/category");
-const likes = require("./likes");
+const Like = require("./like");
 
 module.exports = {
   list: async (req, res) => {
@@ -134,8 +134,9 @@ module.exports = {
         $pull: { contributions: contribution.id },
       });
       await Comment.deleteMany({ contribution_id: contribution.id });
+      await Like.deleteMany({ contribution_id: contribution.id });
 
-      const data = await Contribution.deleteOne({ _id: req.params.id });
+      await Contribution.deleteOne({ _id: req.params.id });
 
       res.status(204).send({ error: false, data: contribution });
     } catch (err) {

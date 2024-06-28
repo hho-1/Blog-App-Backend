@@ -113,7 +113,7 @@ module.exports = {
         $inc: { comment_count: -1 },
       });
 
-      const data = await Comment.deleteOne({ _id: req.params.id });
+      await Comment.deleteOne({ _id: req.params.id });
 
       res.status(204).send({ error: false, data: comment });
     } catch (err) {
