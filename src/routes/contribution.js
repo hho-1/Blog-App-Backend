@@ -14,11 +14,12 @@ router.route('/')
     .get(contribution.list)
     .post(permissions.isLogin, contribution.create)
 
-router.route('/:id')
-    .get(contribution.read)
-    .put(permissions.isLogin, contribution.update)
-    .patch(permissions.isLogin, contribution.update)
-    .delete(permissions.isLogin, contribution.delete)
+router
+  .route("/:id")
+  .get(contribution.read)
+  .put(permissions.isLogin, contribution.update)
+  .patch(contribution.update)
+  .delete(permissions.isLogin, contribution.delete);
 
 /* ------------------------------------------------------- */
 module.exports = router
