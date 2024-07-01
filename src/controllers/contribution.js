@@ -6,7 +6,7 @@ const Contribution = require("../models/contribution");
 const Comment = require("../models/comment");
 const User = require("../models/user");
 const Category = require("../models/category");
-const Like = require("./like");
+const Like = require("../models/like");
 
 module.exports = {
   list: async (req, res) => {
