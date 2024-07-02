@@ -61,7 +61,7 @@ app.use(express.json())
     app.all('*', cors({ origin: 'allmethods.com' }))
 */
 
-app.use(require('cors')()) // Run with defaults.
+app.use(require('cors')()) // Run with defaults.           Tüm sitelere izin vermek icin deploy öncesi alttaki 3 satiri kapatip burayi actik
 /* app.use(require('cors')({
     origin: ["http://localhost:3000", "http://localhost:4173", "http://localhost:5173"]
 })) */
@@ -70,7 +70,7 @@ app.use(require('cors')()) // Run with defaults.
 app.use(require('./src/middlewares/authentication'))
 
 // Run Logger:
-// app.use(require('./src/middlewares/logger'))
+// app.use(require('./src/middlewares/logger'))     log tutma ücretsiz servislerde olmadigi icin deploy öncesi kapattik
 
 // res.getModelList():
 app.use(require('./src/middlewares/findSearchSortPage'))
@@ -101,7 +101,7 @@ app.use(require('./src/routes'))
 app.use(require('./src/middlewares/errorHandler'))
 
 // RUN SERVER:
-//app.listen(PORT, HOST, () => console.log(`http://${HOST}:${PORT}`))
+//app.listen(PORT, HOST, () => console.log(`http://${HOST}:${PORT}`))       deployda HOST parametresine izin verilmedigi icin deploy öncesi HOST parametresini sildik.
 app.listen(PORT, () => console.log(`http://${HOST}:${PORT}`))
 
 /* ------------------------------------------------------- */
