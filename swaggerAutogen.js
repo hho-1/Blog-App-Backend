@@ -43,7 +43,7 @@ const document = {
 		"User": require('./src/models/user').schema.obj,
 		"Contributions": require('./src/models/CommentDislikes').schema.obj,
 		"Category": require('./src/models/category').schema.obj,
-		"Likes": require('./src/models/likes').schema.obj,
+		"Like": require('./src/models/like').schema.obj,
 		"CommentLikes": require('./src/models/CommentLikes').schema.obj,
 		"CommentDislikes": require('./src/models/CommentDislikes').schema.obj,
 		"Comments": require('./src/models/comment').schema.obj,
