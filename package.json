@@ -1,8 +1,8 @@
 {
-  "title": "Stock Management API",
+  "title": "Blog API",
   "name": "stockapi",
   "version": "1.0.0",
-  "description": "Stock Management System",
+  "description": "Blog Management System",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
