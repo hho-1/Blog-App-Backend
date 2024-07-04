@@ -29,7 +29,7 @@ module.exports = {
     if ((username || email) && password) {
       const user = await User.findOne({ $or: [{ username }, { email }] });
 
-      if (user && user.password == passwordEncrypt(password)) {
+      if (user && user.password == password) {             //passwordEncrypt'i kapattim, deploydan sonra log in yapamiyordum
         if (user.is_active) {
           // Use UUID:
           // const { randomUUID } = require('crypto')
